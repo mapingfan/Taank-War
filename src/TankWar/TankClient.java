@@ -18,6 +18,7 @@ import static TankWar.Constant.*;
  * TankWindow类表示整个游戏的窗口；
  * @author 马平凡
  *
+ *
  */
 public class TankClient {
 
@@ -29,13 +30,18 @@ public class TankClient {
 
 class TankWindow extends Frame {
 
-    public static final int STARTXPOSITION = 200;
-    public static final int STARTYPOSITION = 200;
-    public static final Color WINDOWBGCOLOR = Color.GREEN;
+    public static final int STARTXPOSITION = 200; //窗口的起始坐标
+    public static final int STARTYPOSITION = 200;//窗口的起始坐标
+    public static final Color WINDOWBGCOLOR = Color.GREEN;//背景色
     private Tank tank = new Tank(50,50,this,true,true);
+    /**
+     * 用于双缓冲的静态常量；
+     */
     private Image imageBuffer;
     private Graphics graphicsBuffer;
+    //存放子弹
     private ArrayList<Bullet> bulletArrayList = new ArrayList<>();
+    //存放敌人的坦克
     private ArrayList<Tank> enemyTanks = new ArrayList<>();
     private ArrayList<Explosion> explosionArrayList = new ArrayList<>();
     private Wall wall1 = new Wall(200,200,20,300);
@@ -54,7 +60,6 @@ class TankWindow extends Frame {
         for (int i = 0; i <Integer.parseInt(Property.getPropertyValue("enemytanks")); i++) {
             enemyTanks.add(new Tank(Constant.random.nextInt(Constant.WINDOWWIDTH),Constant.random.nextInt(Constant.WINDOWHEIGHT),this,false,true,directions[Constant.random.nextInt(directions.length)]));
         }
-
     }
 
     public ArrayList<Bullet> getBulletArrayList() {
@@ -91,7 +96,6 @@ class TankWindow extends Frame {
         Thread thread = new Thread(new RepaintThread());
         thread.start();
     }
-/*
     @Override
     public void paint(Graphics g) {
         blood.draw(g);
@@ -145,14 +149,14 @@ class TankWindow extends Frame {
 
 
         }
-    }*/
+    }
 
     /*
      *重写update函数，实现双缓冲机制；
      * repaint函数的执行过程：调用update() --> 然后调用paint();
      * 两种实现双缓冲的机制：基于update函数或者基于paint函数；
      */
-   /* @Override
+    @Override
     public void update(Graphics g) {
         if (imageBuffer == null) { //imageBuffer ,第一个缓冲
             imageBuffer = this.createImage(WINDOWWIDTH,WINDOWHEIGHT);
@@ -162,23 +166,6 @@ class TankWindow extends Frame {
         graphicsBuffer.fillRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
         paint(graphicsBuffer);
         g.drawImage(imageBuffer,0,0,this);
-    }*/
-
-    @Override
-    public void paint(Graphics g) {
-        if (imageBuffer == null) { //imageBuffer ,第一个缓冲
-            imageBuffer = this.createImage(WINDOWWIDTH,WINDOWHEIGHT);
-        }
-        graphicsBuffer = imageBuffer.getGraphics(); //graphicsBuffer,第二个缓冲
-        graphicsBuffer.setColor(WINDOWBGCOLOR);
-        graphicsBuffer.fillRect(0,0,WINDOWWIDTH,WINDOWHEIGHT);
-        paint(graphicsBuffer);
-        g.drawImage(imageBuffer,0,0,this);
-    }
-
-    @Override
-    public void update(Graphics g) {
-        paint(g);
     }
 
     /*
@@ -205,6 +192,7 @@ class TankWindow extends Frame {
     /*
      *这个类用于监听键盘事件；
      * 注意理解为什么继承WindowAdapter，而不是是实现KeyListener接口；
+     *
      */
     private class KeyMonitor extends KeyAdapter {
 

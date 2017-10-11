@@ -10,7 +10,7 @@ import java.util.Iterator;
  *
  */
 public class Bullet {
-
+    //子弹的位置；
     private int xPosition;
     private int yPosition;
     private Direction bulletDirection;
@@ -19,9 +19,18 @@ public class Bullet {
     public static final Color BADULLETCOLOR = Color.black;
     public static final int BULLETSIZE = 10;
     private boolean islive = true; //每颗子弹new出来就默认true，出界就认为false;
-    private boolean isGoodBullet;
+    private boolean isGoodBullet; //敌人坦克的子弹是坏子弹，我方坦克的子弹是好子弹；
     private TankWindow tankWindow;
 
+    /**
+     *
+     * @param xPosition 子弹横坐标；
+     * @param yPosition
+     * @param bulletDirection 子弹方向；
+     * @param tankWindow 大管家；
+     * @param isGoodBullet 好坏子弹；
+     *
+     */
     public Bullet(int xPosition, int yPosition, Direction bulletDirection,TankWindow tankWindow, boolean isGoodBullet) {
             this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -30,18 +39,20 @@ public class Bullet {
         this.isGoodBullet = isGoodBullet;
     }
 
-
-
     public boolean isIslive() {
         return islive;
     }
 
+    /**
+     *
+     * @param g 画笔，绘制子弹的方法；子弹绘制自己，方法封装在子弹中比较合理；
+     */
     public void draw(Graphics g) {
-        if (!islive) {
+        if (!islive) { //子弹死了就不要绘制了；
             return;
         }
             Color temp = g.getColor();
-            if (isGoodBullet){
+            if (isGoodBullet){  //好坏子弹颜色不同；
                 g.setColor(GOODULLETCOLOR);
             } else {
                 g.setColor(BADULLETCOLOR);
@@ -93,10 +104,12 @@ public class Bullet {
         }
     }
 
+    //碰撞检测函数；
     public Rectangle getRect() {
         return new Rectangle(xPosition,yPosition,BULLETSIZE,BULLETSIZE);
     }
 
+    //子弹打坦克；
     public boolean hitTank(Tank tank) {
         if (tank.isGoodTank()!=this.isGoodBullet&&tank.isLive()&&this.islive&&tank.getRect().intersects(this.getRect())) {
             if (tank.isGoodTank()){

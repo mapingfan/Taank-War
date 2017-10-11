@@ -12,6 +12,9 @@ public class Tank {
 
     public static final Color GOODTANKCOLOR = Color.RED;
     public static final Color BADTANKCOLOR = Color.BLUE;
+    /**
+     * 用四个布尔变量产生八个方向的方法；
+     */
     private boolean isLeftPressed = false;
     private boolean isRightPressed = false;
     private boolean isUpPressed = false;

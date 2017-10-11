@@ -1,4 +1,8 @@
 package TankWar;
+/**
+ * 用于读取配置文件；
+ * 尝试使用Java语言中的配置文件；
+ */
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -2,6 +2,9 @@ package TankWar;
 
 import java.awt.*;
 
+/**
+ * 补血类
+ */
 public class Blood {
     int[][] points = {{200,300}, {88,120}, {40,90}, {100,150}, {300,340}, {400,280}, {100,555}, {323,534}};
     int cnt = 0;
